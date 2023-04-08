@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Main from "./components/Main";
+import cloudVideo from "./assets/cloudVideo.mp4";
+import moon from "./assets/moon.mp4";
+import Footer from "./components/Footer";
+import { useState } from "react";
 
 function App() {
+  const [favorites, setFavorites] = useState(true);
+  console.log(favorites);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <video autoPlay loop muted>
+        <source src={cloudVideo} type="video/mp4" />
+      </video>
+      <Header setFavorites={setFavorites} favorites={favorites} />
+      <Main favorites={favorites} />
+      <Footer />
     </div>
   );
 }

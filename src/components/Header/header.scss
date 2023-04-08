@@ -1,0 +1,55 @@
+.header-wrapper {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
+
+  header {
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    margin: auto;
+
+    h1,
+    .search-wrapper,
+    .favorite-locations {
+      flex: 1;
+    }
+
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      input {
+        width: 50%;
+        padding: 0.8rem;
+        border: none;
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 2rem;
+        outline: none;
+
+        &::placeholder {
+          color: white;
+          text-align: center;
+        }
+      }
+    }
+
+    .favorite-locations {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      button {
+        background-color: transparent;
+        border: 1px solid white;
+        padding: 0.8rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
