@@ -9,7 +9,12 @@ main {
   grid-gap: 2rem;
 }
 
-@media screen and (max-width: 30rem) {
+@media screen and (max-width: 100rem) {
+  main {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 64rem) {
   main {
     width: 90%;
     display: flex;
