@@ -2,6 +2,9 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import cloudVideo from "./assets/cloudVideo.mp4";
 import moon from "./assets/moon.mp4";
+import moon1 from "./assets/moon1.mp4";
+import moon2 from "./assets/moon2.mp4";
+import moon3 from "./assets/moon3.mp4";
 import Footer from "./components/Footer";
 import { useState } from "react";
 
@@ -12,7 +15,7 @@ function App() {
   return (
     <div className="app">
       <video autoPlay loop muted>
-        <source src={cloudVideo} type="video/mp4" />
+        <source src={moon3} type="video/mp4" />
       </video>
       <Header setFavorites={setFavorites} favorites={favorites} />
       <Main favorites={favorites} />

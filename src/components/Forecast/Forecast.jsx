@@ -26,7 +26,7 @@ const Forecast = () => {
       <motion.div className="forecast-list">
         <motion.div
           drag="x"
-          dragConstraints={{ right: 0 }}
+          dragConstraints={{ right: 0, left: -1000 }}
           className="inner-forecast-list"
         >
           <motion.div className="forecast-card">
