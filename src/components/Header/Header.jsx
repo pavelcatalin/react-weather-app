@@ -1,6 +1,12 @@
 import "./header.scss";
 
-const Header = ({ setFavorites, favorites }) => {
+import debounce from "lodash.debounce";
+
+const Header = ({ setFavorites, favorites, setLocation }) => {
+  const handeleSearchChange = (e) => {
+    setLocation(e.target.value);
+  };
+  const debounceOnChange = debounce(handeleSearchChange, 2000);
   return (
     <div className="header-wrapper">
       <header>
@@ -11,6 +17,7 @@ const Header = ({ setFavorites, favorites }) => {
             name="search"
             className="search-location"
             placeholder="Search location"
+            onChange={debounceOnChange}
           />
         </div>
         <div className="favorite-locations">
