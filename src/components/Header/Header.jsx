@@ -8,7 +8,7 @@ import love from "../../assets/icons/love.png";
 import back from "../../assets/icons/back.png";
 
 const suggestionUrl =
-  "http://api.weatherapi.com/v1/search.json?key=c6b8e2514ae044888d4195455230804&q=";
+  "https://api.weatherapi.com/v1/search.json?key=c6b8e2514ae044888d4195455230804&q=";
 
 const Header = ({
   setFavorites,
