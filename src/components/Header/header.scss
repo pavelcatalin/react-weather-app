@@ -22,14 +22,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
 
       input {
         width: 50%;
-        padding: 0.8rem;
-        border: none;
+        padding: 1rem 0 0.3rem 0;
         background-color: transparent;
-        border: 1px solid white;
-        border-radius: 2rem;
+        border: none;
+        border-bottom: 1px solid white;
         outline: none;
 
         &::placeholder {
@@ -50,6 +50,140 @@
         padding: 0.8rem;
         border-radius: 0.5rem;
         cursor: pointer;
+      }
+    }
+
+    .back-icon,
+    .search-icon,
+    .favorites-icon {
+      display: none;
+    }
+
+    .suggestions-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 20vh;
+      width: 50%;
+      padding-left: 0.5rem;
+      position: absolute;
+      top: 2.2rem;
+      background-color: rgba($color: #aaa8a8, $alpha: 0.4);
+      box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+      border-radius: 0 0 1rem 1rem;
+    }
+    .suggestion {
+      display: flex;
+      align-items: center;
+      height: 2rem;
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 64rem) {
+  .header-wrapper {
+    header {
+      width: 90%;
+
+      h1 {
+        font-size: 2rem;
+        flex: 2;
+      }
+
+      .search-wrapper,
+      .favorite-locations {
+        flex: 0;
+        button {
+          padding: 0;
+          border: none;
+        }
+      }
+
+      .search-location,
+      .favorites,
+      .back-icon {
+        display: none;
+      }
+
+      .search-icon,
+      .favorites-icon {
+        display: inline-block;
+      }
+
+      .search-icon {
+        margin-right: 0.5rem;
+      }
+
+      .search-icon {
+        background: transparent;
+        border: none;
+      }
+    }
+  }
+
+  .mobile-search {
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+
+    header {
+      display: flex;
+      justify-content: end;
+
+      h1 {
+        display: none;
+      }
+      .search-wrapper {
+        flex: 1;
+        input {
+          width: 100%;
+          margin: 0 2rem 0 1rem;
+          border: none;
+          border-bottom: 1px solid white;
+          border-radius: 0;
+        }
+      }
+      .search-location {
+        display: inline-block;
+        width: 100%;
+      }
+
+      .favorites-icon,
+      .search-icon {
+        display: none;
+      }
+      .back-icon {
+        display: inline-block;
+      }
+
+      .suggestions-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 20vh;
+        width: 78%;
+
+        padding-left: 0.5rem;
+        position: absolute;
+        top: 2.3rem;
+        left: 2.9rem;
+        background-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .header-wrapper {
+    header {
+      h1 {
+        font-size: 1rem;
+        flex: 2;
       }
     }
   }

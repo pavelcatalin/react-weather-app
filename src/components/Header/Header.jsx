@@ -1,33 +1,112 @@
-import "./header.scss";
-
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import debounce from "lodash.debounce";
+import { useState, useEffect } from "react";
 
-const Header = ({ setFavorites, favorites, setLocation }) => {
-  const handeleSearchChange = (e) => {
-    setLocation(e.target.value);
+import "./header.scss";
+import searchIcon from "../../assets/icons/searchIcon.png";
+import love from "../../assets/icons/love.png";
+import back from "../../assets/icons/back.png";
+
+const suggestionUrl =
+  "http://api.weatherapi.com/v1/search.json?key=c6b8e2514ae044888d4195455230804&q=";
+
+const Header = ({
+  setFavorites,
+  favorites,
+  searchedLocation,
+  setSearchedLocation,
+}) => {
+  const [openSearch, setOpenSearch] = useState(false);
+  const [city, setCity] = useState("");
+  const [citySuggestion, setCitySuggestion] = useState([]);
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      const response = await fetch(`${suggestionUrl}${city}`);
+      const data = await response.json();
+
+      setCitySuggestion(data);
+    };
+    const fetchDebounce = debounce(fetchSuggestions, 1000);
+
+    if (city.length > 2) {
+      fetchDebounce();
+    } else {
+      setCitySuggestion([]);
+    }
+  }, [city]);
+
+  const handleSearchChange = (e) => {
+    setCity(e.target.value);
   };
-  const debounceOnChange = debounce(handeleSearchChange, 2000);
+
+  const handleClick = (clickedItem) => {
+    setSearchedLocation(clickedItem);
+    setCitySuggestion([]);
+    setCity([]);
+    setOpenSearch(false);
+  };
+
+  openSearch ? disableBodyScroll(document) : enableBodyScroll(document);
+
   return (
-    <div className="header-wrapper">
+    <div className={`header-wrapper ${openSearch ? "mobile-search" : ""}`}>
       <header>
         <h1>Weather Dashboard</h1>
+
         <div className="search-wrapper">
+          <span className="back-icon">
+            <img
+              src={back}
+              alt="back-icon"
+              width={"30px"}
+              onClick={() => setOpenSearch(!openSearch)}
+            />
+          </span>
+
           <input
             type="text"
             name="search"
             className="search-location"
             placeholder="Search location"
-            onChange={debounceOnChange}
+            value={city}
+            onChange={handleSearchChange}
           />
+
+          <div className={citySuggestion.length ? "suggestions-wrapper" : ""}>
+            {citySuggestion &&
+              citySuggestion.map((item) => {
+                return (
+                  <div
+                    className="suggestion"
+                    onClick={() => handleClick(`${item.name},${item.country}`)}
+                  >
+                    {item.name}, {item.country}
+                  </div>
+                );
+              })}
+          </div>
+          <button className="search-icon">
+            <img
+              src={searchIcon}
+              alt=""
+              width="30px"
+              onClick={() => setOpenSearch(!openSearch)}
+            />
+          </button>
         </div>
-        <div className="favorite-locations">
+
+        <nav className="favorite-locations">
           <button
             className="favorites"
             onClick={() => setFavorites(!favorites)}
           >
-            Favorite locations
+            Favorites
           </button>
-        </div>
+          <button className="favorites-icon">
+            <img src={love} alt="" width="35px" />
+          </button>
+        </nav>
       </header>
     </div>
   );

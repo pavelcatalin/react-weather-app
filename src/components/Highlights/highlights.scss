@@ -17,7 +17,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-gap: 3rem;
+    grid-gap: 2rem;
 
     .highlight-card {
       display: flex;
@@ -36,16 +36,26 @@
         justify-content: space-between;
 
         .value {
-          font-size: 2rem;
+          font-size: 1.2rem;
         }
       }
     }
   }
 
-  @media screen and (max-width: 30rem) {
+  @media screen and (max-width: 45rem) {
     .highlights-wrapper {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      grid-gap: 1.2rem;
+    }
+  }
+  @media screen and (max-width: 45rem) {
+    .highlights-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      grid-gap: 1.2rem;
     }
   }
 }

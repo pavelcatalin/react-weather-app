@@ -1,59 +1,64 @@
 import Header from "./components/Header";
 import Main from "./components/Main";
-import cloudVideo from "./assets/cloudVideo.mp4";
-import moon from "./assets/moon.mp4";
-import moon1 from "./assets/moon1.mp4";
-import moon2 from "./assets/moon2.mp4";
-import moon3 from "./assets/moon3.mp4";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
+import Theme from "./components/Theme/Theme";
 
 function App() {
   const [favorites, setFavorites] = useState(true);
-  const [data, setData] = useState();
-  const [location, setLocation] = useState();
+  const [currentWeather, setCurrentWeather] = useState([]);
+  const [searchedLocation, setSearchedLocation] = useState("");
+  const [geolocation, setGeolocation] = useState({});
+  const [currentCity, setCurrentCity] = useState("");
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setGeolocation(position.coords);
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchCurrentCity = async () => {
+      const response = await fetch(
+        `https://api.geoapify.com/v1/geocode/reverse?lat=${geolocation?.latitude}&lon=${geolocation?.longitude}&format=json&apiKey=3700272628364397b501a4e56db3a6b9`
+      );
+      const data = await response.json();
+      setCurrentCity(...data.results);
+    };
+    if (geolocation.latitude) {
+      fetchCurrentCity();
+    }
+  }, [geolocation]);
 
   useEffect(() => {
     const fetchWeather = async () => {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=c6b8e2514ae044888d4195455230804&q=${location}&aqi=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=c6b8e2514ae044888d4195455230804&q=${
+          searchedLocation || currentCity.city
+        }&days=7&aqi=yes&alerts=no`
       );
-      const data = await response.json();
-      setData(data);
+      const weatherData = await response.json();
+
+      setCurrentWeather(weatherData);
     };
 
-    fetchWeather();
-  }, [location]);
+    if (currentCity.city) {
+      fetchWeather();
+    }
+  }, [currentCity.city, searchedLocation]);
 
-  console.log(data?.location?.lon);
+  console.log(searchedLocation);
+
   return (
     <div className="app">
-      <video
-        autoPlay
-        loop
-        muted
-        style={
-          data?.current?.is_day ? { display: "none" } : { display: "flex" }
-        }
-      >
-        <source src={moon3} type="video/mp4" />
-      </video>
-      <video
-        autoPlay
-        loop
-        muted
-        style={
-          !data?.current?.is_day ? { display: "none" } : { display: "flex" }
-        }
-      >
-        <source src={cloudVideo} type="video/mp4" />
-      </video>
+      <Theme isDay={currentWeather?.current?.is_day} />
       <Header
         setFavorites={setFavorites}
         favorites={favorites}
-        setLocation={setLocation}
+        setSearchedLocation={setSearchedLocation}
+        searchedLocation={searchedLocation}
       />
-      <Main favorites={favorites} data={data} />
+      <Main favorites={favorites} currentWeather={currentWeather} />
       <Footer />
     </div>
   );
