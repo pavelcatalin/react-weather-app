@@ -1,35 +1,67 @@
 import termomether from "../../assets/icons/thermometer.png";
-import wind from "../../assets/icons/wind.png";
+import rain from "../../assets/icons/rain.png";
+import currentLocation from "../../assets/icons/currentLocation.png";
+import { useEffect, useState } from "react";
 
-const CurrentWeather = ({ currentWeather }) => {
+const CurrentWeather = ({ weather, geolocation }) => {
+  const [isCurrentPosition, setIsCurrentPosition] = useState(false);
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const d = new Date();
+  const month = d.toString().split(" ")[1];
+  let dayNumber = d.toString().split(" ")[2];
+  let day = weekday[d.getDay()];
+
+  /* Verify if the current location is the same with the search location */
+  useEffect(() => {
+    if (geolocation.latitude) {
+      if (weather?.location?.lat.toFixed() === geolocation.latitude.toFixed()) {
+        setIsCurrentPosition(true);
+      } else {
+        setIsCurrentPosition(false);
+      }
+    }
+  }, [weather, geolocation]);
+
   return (
     <section className="current-weather">
-      <h2>{currentWeather?.location?.name}</h2>
+      <h2>
+        {weather?.location?.name}
 
-      <h4>Monday 16, Apr</h4>
+        {isCurrentPosition && <img src={currentLocation} alt="" />}
+      </h2>
+
+      <h4>{`${day} ${dayNumber}, ${month} `} </h4>
+      <h5>Localtime: {weather?.location?.localtime.split(" ")[1]}</h5>
 
       <div className="weather-icon">
-        <img src={currentWeather?.current?.condition?.icon} alt="" />
+        {weather?.current?.condition?.icon && (
+          <img src={weather?.current?.condition?.icon} alt="" />
+        )}
       </div>
 
-      <div className="weather-status">
-        {currentWeather?.current?.condition?.text}
-      </div>
+      <div className="weather-status">{weather?.current?.condition?.text}</div>
 
-      <div className="current-temp">{currentWeather?.current?.temp_c}°C</div>
+      <div className="current-temp">{weather?.current?.temp_c}°C</div>
 
       <div className="min-max-temp">
         <span className="max-temp">
-          {currentWeather?.current?.temp_c >
-          Math.round(currentWeather?.forecast?.forecastday[0].day.maxtemp_c)
-            ? currentWeather?.current?.temp_c
-            : Math.round(
-                currentWeather?.forecast?.forecastday[0].day.maxtemp_c
-              )}
+          {weather?.current?.temp_c >
+          Math.round(weather?.forecast?.forecastday[0].day.maxtemp_c)
+            ? weather?.current?.temp_c
+            : Math.round(weather?.forecast?.forecastday[0].day.maxtemp_c)}
           °C /{" "}
         </span>
         <span className="min-temp">
-          {Math.round(currentWeather?.forecast?.forecastday[0].day.mintemp_c)}°C
+          {Math.round(weather?.forecast?.forecastday[0].day.mintemp_c)}°C
         </span>
       </div>
 
@@ -40,16 +72,16 @@ const CurrentWeather = ({ currentWeather }) => {
           </span>
           <div className="feels-like">
             <span>Feels like</span>
-            <span>{currentWeather?.current?.feelslike_c}°C</span>
+            <span>{weather?.current?.feelslike_c}°C</span>
           </div>
         </div>
         <div className="wind">
           <span>
-            <img src={wind} alt="termo" />
+            <img src={rain} alt="termo" />
           </span>
           <div className="feels-like">
-            <span>Wind</span>
-            <span>{currentWeather?.current?.wind_kph}km/h</span>
+            <span>Rain</span>
+            <span>{weather?.current?.precip_mm} mm</span>
           </div>
         </div>
       </div>

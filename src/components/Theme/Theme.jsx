@@ -13,7 +13,7 @@ const Theme = ({ isDay }) => {
         muted
         style={isDay ? { display: "none" } : { display: "flex" }}
       >
-        <source src={cloudVideo} type="video/mp4" />
+        <source src={moon} type="video/mp4" />
       </video>
       <video
         autoPlay

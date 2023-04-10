@@ -75,9 +75,10 @@ const Header = ({
 
           <div className={citySuggestion.length ? "suggestions-wrapper" : ""}>
             {citySuggestion &&
-              citySuggestion.map((item) => {
+              citySuggestion.map((item, index) => {
                 return (
                   <div
+                    key={index}
                     className="suggestion"
                     onClick={() => handleClick(`${item.name},${item.country}`)}
                   >

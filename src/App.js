@@ -6,7 +6,7 @@ import Theme from "./components/Theme/Theme";
 
 function App() {
   const [favorites, setFavorites] = useState(true);
-  const [currentWeather, setCurrentWeather] = useState([]);
+  const [weather, setWeather] = useState([]);
   const [searchedLocation, setSearchedLocation] = useState("");
   const [geolocation, setGeolocation] = useState({});
   const [currentCity, setCurrentCity] = useState("");
@@ -15,7 +15,7 @@ function App() {
     navigator.geolocation.getCurrentPosition((position) => {
       setGeolocation(position.coords);
     });
-  }, []);
+  }, [searchedLocation]);
 
   useEffect(() => {
     const fetchCurrentCity = async () => {
@@ -39,26 +39,24 @@ function App() {
       );
       const weatherData = await response.json();
 
-      setCurrentWeather(weatherData);
+      setWeather(weatherData);
     };
 
     if (currentCity.city) {
       fetchWeather();
     }
   }, [currentCity.city, searchedLocation]);
-
-  console.log(searchedLocation);
-
+  console.log(weather);
   return (
     <div className="app">
-      <Theme isDay={currentWeather?.current?.is_day} />
+      <Theme isDay={weather?.current?.is_day} />
       <Header
         setFavorites={setFavorites}
         favorites={favorites}
         setSearchedLocation={setSearchedLocation}
         searchedLocation={searchedLocation}
       />
-      <Main favorites={favorites} currentWeather={currentWeather} />
+      <Main favorites={favorites} weather={weather} geolocation={geolocation} />
       <Footer />
     </div>
   );
