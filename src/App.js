@@ -46,7 +46,7 @@ function App() {
       fetchWeather();
     }
   }, [currentCity.city, searchedLocation]);
-  console.log(weather);
+
   return (
     <div className="app">
       <Theme isDay={weather?.current?.is_day} />

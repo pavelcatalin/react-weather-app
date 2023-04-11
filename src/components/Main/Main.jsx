@@ -4,13 +4,12 @@ import Highlights from "../Highlights";
 import FavoriteLocations from "../FavoriteLocations/FavoriteLocations";
 
 const Main = ({ favorites, weather, geolocation }) => {
-  console.log(weather);
   return (
     <main>
       {favorites ? (
         <>
           <CurrentWeather weather={weather} geolocation={geolocation} />
-          <Forecast />
+          <Forecast weather={weather} />
           <Highlights weather={weather} />
         </>
       ) : (
