@@ -3,6 +3,7 @@ import moon from "../../assets/moon.mp4";
 import moon1 from "../../assets/moon1.mp4";
 import moon2 from "../../assets/moon2.mp4";
 import moon3 from "../../assets/moon3.mp4";
+import sun from "../../assets/sun.mp4";
 
 const Theme = ({ isDay }) => {
   return (
@@ -13,7 +14,7 @@ const Theme = ({ isDay }) => {
         muted
         style={isDay ? { display: "none" } : { display: "flex" }}
       >
-        <source src={moon} type="video/mp4" />
+        <source src={sun} type="video/mp4" />
       </video>
       <video
         autoPlay

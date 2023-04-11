@@ -6,16 +6,16 @@ import "./header.scss";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import love from "../../assets/icons/love.png";
 import back from "../../assets/icons/back.png";
+import home from "../../assets/icons/home.png";
+import { useDispatch, useSelector } from "react-redux";
+import { isOpen } from "../../utils/redux/slices/favorites";
 
 const suggestionUrl =
   "https://api.weatherapi.com/v1/search.json?key=c6b8e2514ae044888d4195455230804&q=";
 
-const Header = ({
-  setFavorites,
-  favorites,
-  searchedLocation,
-  setSearchedLocation,
-}) => {
+const Header = ({ setSearchedLocation }) => {
+  const favoritesIsOpen = useSelector((state) => state.favorites.isOpen);
+  const dispatch = useDispatch();
   const [openSearch, setOpenSearch] = useState(false);
   const [city, setCity] = useState("");
   const [citySuggestion, setCitySuggestion] = useState([]);
@@ -52,9 +52,12 @@ const Header = ({
   return (
     <div className={`header-wrapper ${openSearch ? "mobile-search" : ""}`}>
       <header>
-        <h1>Weather Dashboard</h1>
+        <h1>Weather {favoritesIsOpen ? "Dashboard" : "Favorites"}</h1>
 
-        <div className="search-wrapper">
+        <div
+          className="search-wrapper"
+          style={favoritesIsOpen ? { display: "flex" } : { display: "none" }}
+        >
           <span className="back-icon">
             <img
               src={back}
@@ -98,14 +101,15 @@ const Header = ({
         </div>
 
         <nav className="favorite-locations">
-          <button
-            className="favorites"
-            onClick={() => setFavorites(!favorites)}
-          >
-            Favorites
+          <button className="favorites" onClick={() => dispatch(isOpen())}>
+            {favoritesIsOpen ? "Favorites" : "Dashboard"}
           </button>
-          <button className="favorites-icon">
-            <img src={love} alt="" width="35px" />
+          <button className="favorites-icon" onClick={() => dispatch(isOpen())}>
+            {favoritesIsOpen ? (
+              <img src={love} alt="" width="35px" />
+            ) : (
+              <img src={home} alt="" width="35px" />
+            )}
           </button>
         </nav>
       </header>

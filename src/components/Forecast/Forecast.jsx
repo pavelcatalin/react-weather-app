@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 
 import "./forecast.scss";
-import sun from "../../assets/icons/sun.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const Forecast = ({ weather }) => {
   const [selectedButton, setSelectedbutton] = useState(true);
   const [hourlyForecast, setHourlyForecast] = useState([]);
   const [weekForecast, setWeekForecast] = useState([]);
+  const [carouselWidth, setCarouselWidth] = useState([]);
   const localtime = weather.location?.localtime_epoch;
+  const carousel = useRef();
 
   const getHourlyForecast = () => {
     const dayForecast = [
@@ -50,6 +51,13 @@ const Forecast = ({ weather }) => {
     }
   }, [weather, selectedButton]);
 
+  useEffect(() => {
+    setCarouselWidth(
+      carousel.current.scrollWidth - carousel.current.offsetWidth
+    );
+    console.log(carousel.current.scrollWidth, carousel.current.offsetWidth);
+  }, []);
+
   return (
     <section className="forecast">
       <div className="forecast-options">
@@ -66,10 +74,10 @@ const Forecast = ({ weather }) => {
           7days
         </button>
       </div>
-      <motion.div className="forecast-list">
+      <motion.div className="forecast-list" ref={carousel}>
         <motion.div
           drag="x"
-          dragConstraints={{ right: 0, left: -2200 }}
+          dragConstraints={{ right: 0, left: -carouselWidth }}
           className="inner-forecast-list"
         >
           {selectedButton

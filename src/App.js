@@ -3,9 +3,11 @@ import Main from "./components/Main";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import Theme from "./components/Theme/Theme";
+import { useSelector } from "react-redux";
+import FavoriteLocations from "./components/FavoriteLocations/FavoriteLocations";
 
 function App() {
-  const [favorites, setFavorites] = useState(true);
+  const isOpen = useSelector((state) => state.favorites.isOpen);
   const [weather, setWeather] = useState([]);
   const [searchedLocation, setSearchedLocation] = useState("");
   const [geolocation, setGeolocation] = useState({});
@@ -49,14 +51,21 @@ function App() {
 
   return (
     <div className="app">
-      <Theme isDay={weather?.current?.is_day} />
+      <Theme isDay={weather?.current?.is_day} weather={weather} />
       <Header
-        setFavorites={setFavorites}
-        favorites={favorites}
         setSearchedLocation={setSearchedLocation}
         searchedLocation={searchedLocation}
       />
-      <Main favorites={favorites} weather={weather} geolocation={geolocation} />
+      {isOpen ? (
+        <Main weather={weather} geolocation={geolocation} />
+      ) : (
+        <FavoriteLocations
+          weather={weather}
+          geolocation={geolocation}
+          setSearchedLocation={setSearchedLocation}
+        />
+      )}
+
       <Footer />
     </div>
   );
