@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
 
 import "./forecast.scss";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const Forecast = ({ weather }) => {
   const [selectedButton, setSelectedbutton] = useState(true);
   const [hourlyForecast, setHourlyForecast] = useState([]);
   const [weekForecast, setWeekForecast] = useState([]);
-  const [carouselWidth, setCarouselWidth] = useState([]);
   const localtime = weather.location?.localtime_epoch;
-  const carousel = useRef();
 
   const getHourlyForecast = () => {
     const dayForecast = [
@@ -51,13 +49,6 @@ const Forecast = ({ weather }) => {
     }
   }, [weather, selectedButton]);
 
-  useEffect(() => {
-    setCarouselWidth(
-      carousel.current.scrollWidth - carousel.current.offsetWidth
-    );
-    console.log(carousel.current.scrollWidth, carousel.current.offsetWidth);
-  }, []);
-
   return (
     <section className="forecast">
       <div className="forecast-options">
@@ -74,15 +65,11 @@ const Forecast = ({ weather }) => {
           7days
         </button>
       </div>
-      <motion.div className="forecast-list" ref={carousel}>
-        <motion.div
-          drag="x"
-          dragConstraints={{ right: 0, left: -carouselWidth }}
-          className="inner-forecast-list"
-        >
+      <div className="forecast-list">
+        <div className="inner-forecast-list">
           {selectedButton
             ? hourlyForecast.map((item, index) => (
-                <motion.div key={index} className="forecast-card">
+                <div key={index} className="forecast-card">
                   <span className="day">
                     {selectedButton ? item.time.split(" ")[1] : item.day}
                   </span>
@@ -98,10 +85,10 @@ const Forecast = ({ weather }) => {
                       °C
                     </span>
                   </div>
-                </motion.div>
+                </div>
               ))
             : weekForecast.map((item, index) => (
-                <motion.div key={index} className="forecast-card">
+                <div key={index} className="forecast-card">
                   <span className="day">
                     {selectedButton ? item.time.split(" ")[1] : item.day}
                   </span>
@@ -119,10 +106,10 @@ const Forecast = ({ weather }) => {
 
                     <span className="min-temp">{item.minTemp}°C</span>
                   </div>
-                </motion.div>
+                </div>
               ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

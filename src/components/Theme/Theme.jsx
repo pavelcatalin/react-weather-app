@@ -1,29 +1,45 @@
-import cloudVideo from "../../assets/cloudVideo.mp4";
-import moon from "../../assets/moon.mp4";
-import moon1 from "../../assets/moon1.mp4";
-import moon2 from "../../assets/moon2.mp4";
-import moon3 from "../../assets/moon3.mp4";
-import sun from "../../assets/sun.mp4";
+import { useEffect, useState } from "react";
 
-const Theme = ({ isDay }) => {
+import alternative from "../../assets/alternative.mp4";
+import cloud from "../../assets/cloud.mp4";
+import cloudy from "../../assets/cloudy.mp4";
+import moon from "../../assets/moon.mp4";
+import sun from "../../assets/sun.mp4";
+import rain from "../../assets/rain.mp4";
+
+const Theme = ({ weather }) => {
+  const [theme, setTheme] = useState(sun);
+  const isDay = Boolean(weather?.current?.is_day);
+  const currentCondition = weather?.current?.condition?.text;
+
+  useEffect(() => {
+    if (currentCondition) {
+      if (currentCondition == "Overcast") {
+        setTheme(cloud);
+      } else if (currentCondition.split(" ").includes("cloudy")) {
+        setTheme(cloudy);
+      } else if (currentCondition == "Sunny") {
+        setTheme(sun);
+      } else if (currentCondition.split(" ").includes("rain")) {
+        setTheme(rain);
+      } else if (currentCondition.split(" ").includes("sun")) {
+        setTheme(sun);
+      } else if (currentCondition.split(" ").includes("mist")) {
+        setTheme(cloudy);
+      } else {
+        setTheme(alternative);
+      }
+    }
+  }, [currentCondition]);
   return (
     <>
       <video
         autoPlay
         loop
         muted
-        style={isDay ? { display: "none" } : { display: "flex" }}
-      >
-        <source src={sun} type="video/mp4" />
-      </video>
-      <video
-        autoPlay
-        loop
-        muted
-        style={!isDay ? { display: "none" } : { display: "flex" }}
-      >
-        <source src={cloudVideo} type="video/mp4" />
-      </video>
+        src={isDay ? theme : moon}
+        type="video/mp4"
+      ></video>
     </>
   );
 };

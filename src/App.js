@@ -1,10 +1,10 @@
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
 import Theme from "./components/Theme/Theme";
+import FavoriteLocations from "./components/FavoriteLocations";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import FavoriteLocations from "./components/FavoriteLocations/FavoriteLocations";
 
 function App() {
   const isOpen = useSelector((state) => state.favorites.isOpen);
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="app">
-      <Theme isDay={weather?.current?.is_day} weather={weather} />
+      <Theme weather={weather} />
       <Header
         setSearchedLocation={setSearchedLocation}
         searchedLocation={searchedLocation}

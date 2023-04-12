@@ -82,7 +82,6 @@ const CurrentWeather = ({ weather, geolocation }) => {
     checkLocationStatus();
   }, [weather.location?.name, weather.location?.country]);
 
-  console.log(weather);
   return (
     <section className="current-weather">
       <span className="add-to-favorites">
@@ -126,7 +125,11 @@ const CurrentWeather = ({ weather, geolocation }) => {
           °C /{" "}
         </span>
         <span className="min-temp">
-          {Math.round(weather?.forecast?.forecastday[0].day.mintemp_c)}°C
+          {weather?.current?.temp_c <
+          Math.round(weather?.forecast?.forecastday[0].day.mintemp_c)
+            ? weather?.current?.temp_c
+            : Math.round(weather?.forecast?.forecastday[0].day.mintemp_c)}
+          °C
         </span>
       </div>
 

@@ -4,7 +4,7 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-
+  color: white;
   // background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
   border-radius: 1rem;
@@ -42,20 +42,37 @@
     }
   }
 
-  @media screen and (max-width: 45rem) {
+  @media screen and (max-width: 75rem) {
     .highlights-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      grid-gap: 1.2rem;
+      grid-gap: 1rem;
     }
   }
-  @media screen and (max-width: 45rem) {
+}
+
+@media screen and (max-width: 36.25rem) {
+  .highlights {
     .highlights-wrapper {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-evenly;
       grid-gap: 1.2rem;
+
+      .highlight-card {
+        min-width: 6.875rem;
+
+        .title {
+          margin-bottom: 1rem;
+        }
+
+        .highlight-value {
+          display: flex;
+          flex-direction: column-reverse;
+
+          img {
+            margin-top: 1rem;
+          }
+        }
+      }
     }
   }
 }

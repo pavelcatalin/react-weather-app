@@ -4,7 +4,6 @@
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
 
   header {
-    height: 6rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,6 +16,9 @@
     .favorite-locations {
       flex: 1;
     }
+    h1 {
+      color: white;
+    }
 
     .search-wrapper {
       display: flex;
@@ -25,7 +27,7 @@
       position: relative;
 
       input {
-        width: 50%;
+        width: 80%;
         padding: 1rem 0 0.3rem 0;
         background-color: transparent;
         border: none;
@@ -36,6 +38,9 @@
           color: white;
           text-align: center;
         }
+        &:focus {
+          color: white;
+        }
       }
     }
 
@@ -45,9 +50,10 @@
       justify-content: end;
 
       button {
+        padding: 0.8rem 3rem;
         background-color: transparent;
+        color: white;
         border: 1px solid white;
-        padding: 0.8rem;
         border-radius: 0.5rem;
         cursor: pointer;
       }
@@ -63,11 +69,12 @@
       display: flex;
       flex-direction: column;
       min-height: 20vh;
-      width: 50%;
+      width: 80%;
       padding-left: 0.5rem;
       position: absolute;
+      z-index: 13;
       top: 2.2rem;
-      background-color: rgba($color: #aaa8a8, $alpha: 0.4);
+      background-color: rgba($color: #090909, $alpha: 0.4);
       box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
       border-radius: 0 0 1rem 1rem;
     }
@@ -79,19 +86,24 @@
       cursor: pointer;
 
       &:hover {
-        color: black;
+        color: rgb(122, 120, 120);
       }
     }
   }
 }
 
+@media screen and (max-width: 100rem) {
+  h1 {
+    font-size: 1.6rem;
+  }
+}
 @media screen and (max-width: 64rem) {
   .header-wrapper {
     header {
       width: 90%;
 
       h1 {
-        font-size: 2rem;
+        font-size: 1.7rem;
         flex: 2;
       }
 
@@ -166,9 +178,8 @@
         flex-direction: column;
         min-height: 20vh;
         width: 78%;
-
-        padding-left: 0.5rem;
         position: absolute;
+        padding-left: 0;
         top: 2.3rem;
         left: 2.9rem;
         background-color: transparent;
@@ -179,6 +190,16 @@
 }
 
 @media screen and (max-width: 48rem) {
+  .header-wrapper {
+    header {
+      h1 {
+        font-size: 1.3rem;
+        flex: 2;
+      }
+    }
+  }
+}
+@media screen and (max-width: 30rem) {
   .header-wrapper {
     header {
       h1 {

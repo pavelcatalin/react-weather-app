@@ -1,12 +1,13 @@
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import debounce from "lodash.debounce";
-import { useState, useEffect } from "react";
 
 import "./header.scss";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import love from "../../assets/icons/love.png";
 import back from "../../assets/icons/back.png";
 import home from "../../assets/icons/home.png";
+
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isOpen } from "../../utils/redux/slices/favorites";
 
@@ -47,6 +48,11 @@ const Header = ({ setSearchedLocation }) => {
     setOpenSearch(false);
   };
 
+  const handleClickBackButton = () => {
+    setOpenSearch(!openSearch);
+    setCitySuggestion([]);
+  };
+
   openSearch ? disableBodyScroll(document) : enableBodyScroll(document);
 
   return (
@@ -63,7 +69,7 @@ const Header = ({ setSearchedLocation }) => {
               src={back}
               alt="back-icon"
               width={"30px"}
-              onClick={() => setOpenSearch(!openSearch)}
+              onClick={handleClickBackButton}
             />
           </span>
 

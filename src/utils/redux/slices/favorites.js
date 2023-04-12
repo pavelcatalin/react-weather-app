@@ -39,14 +39,13 @@ export const favorites = createSlice({
         }
       });
 
-      console.log(filteredValues);
       const stateToString = filteredValues.map(
         (item) =>
           `${item.city}*${item.country}*${item.currentTemperature}*${item.currentCondition}`
       );
 
       localStorage.setItem("favoritesValues", stateToString.join(","));
-      console.log(localStorage.getItem("favoritesValues"));
+
       localStorage.getItem("favoritesValues")
         ? (state.values = localStorage
             .getItem("favoritesValues")

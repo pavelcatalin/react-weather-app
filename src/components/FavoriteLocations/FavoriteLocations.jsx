@@ -50,7 +50,8 @@ const FavoriteLocations = ({ weather, geolocation, setSearchedLocation }) => {
       ) : (
         <div className="empty-list">
           <p>
-            Your list is empty. Please go to the dashboard and add favorites.
+            Your locations list is empty. Please go to the dashboard and add
+            favorites.
           </p>
         </div>
       )}
