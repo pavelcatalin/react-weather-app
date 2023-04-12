@@ -14,11 +14,11 @@ const Theme = ({ weather }) => {
 
   useEffect(() => {
     if (currentCondition) {
-      if (currentCondition == "Overcast") {
+      if (currentCondition === "Overcast") {
         setTheme(cloud);
       } else if (currentCondition.split(" ").includes("cloudy")) {
         setTheme(cloudy);
-      } else if (currentCondition == "Sunny") {
+      } else if (currentCondition === "Sunny") {
         setTheme(sun);
       } else if (currentCondition.split(" ").includes("rain")) {
         setTheme(rain);

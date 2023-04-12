@@ -18,6 +18,16 @@ const FavoriteLocations = ({ weather, geolocation, setSearchedLocation }) => {
     dispatch(isOpen());
   };
 
+  const onClose = (e, city, country) => {
+    e.stopPropagation();
+    dispatch(
+      removeFromFavorites({
+        city: city,
+        country: country,
+      })
+    );
+  };
+
   return (
     <section className="favorite-locations-wrapper">
       {favorites.length ? (
@@ -30,19 +40,12 @@ const FavoriteLocations = ({ weather, geolocation, setSearchedLocation }) => {
             <h2>{item.city}</h2>
 
             <div className="current-condition">
-              <span>{item.currentTemperature}°C</span>
+              <span>{Number(item.currentTemperature).toFixed(0)}°C</span>
               <span>{item.currentCondition}</span>
             </div>
             <span
               className="close-button"
-              onClick={() =>
-                dispatch(
-                  removeFromFavorites({
-                    city: item.city,
-                    country: item.country,
-                  })
-                )
-              }
+              onClick={(e) => onClose(e, item.city, item.country)}
             >
               <img src={close} alt="close-button" />
             </span>

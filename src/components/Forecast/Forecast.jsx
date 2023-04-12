@@ -65,7 +65,7 @@ const Forecast = ({ weather }) => {
           style={!selectedButton ? { borderBottom: "1px solid white" } : {}}
           onClick={() => setSelectedbutton(false)}
         >
-          7days
+          {weather.forecast && `${weather.forecast?.forecastday.length} days`}
         </button>
       </div>
       <div className="forecast-list">

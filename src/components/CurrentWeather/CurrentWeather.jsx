@@ -115,7 +115,9 @@ const CurrentWeather = ({ weather, geolocation }) => {
 
       <div className="weather-status">{weather?.current?.condition?.text}</div>
 
-      <div className="current-temp">{weather?.current?.temp_c}°C</div>
+      <div className="current-temp">
+        {weather?.current?.temp_c.toFixed(0)}°C
+      </div>
 
       <div className="min-max-temp">
         <span className="max-temp">
@@ -141,7 +143,7 @@ const CurrentWeather = ({ weather, geolocation }) => {
           </span>
           <div className="feels-like">
             <span>Feels like</span>
-            <span>{weather?.current?.feelslike_c}°C</span>
+            <span>{weather?.current?.feelslike_c.toFixed(0)}°C</span>
           </div>
         </div>
         <div className="wind">
