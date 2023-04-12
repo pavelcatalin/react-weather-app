@@ -10,9 +10,7 @@ import home from "../../assets/icons/home.png";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isOpen } from "../../utils/redux/slices/favorites";
-
-const suggestionUrl =
-  "https://api.weatherapi.com/v1/search.json?key=c6b8e2514ae044888d4195455230804&q=";
+import { WEATHER_API_KEY } from "../../utils/api";
 
 const Header = ({ setSearchedLocation }) => {
   const favoritesIsOpen = useSelector((state) => state.favorites.isOpen);
@@ -21,9 +19,12 @@ const Header = ({ setSearchedLocation }) => {
   const [city, setCity] = useState("");
   const [citySuggestion, setCitySuggestion] = useState([]);
 
+  /*Fetch search suggestions */
   useEffect(() => {
     const fetchSuggestions = async () => {
-      const response = await fetch(`${suggestionUrl}${city}`);
+      const response = await fetch(
+        `https://api.weatherapi.com/v1/search.json?key=${WEATHER_API_KEY}&q=${city}`
+      );
       const data = await response.json();
 
       setCitySuggestion(data);
@@ -40,7 +41,7 @@ const Header = ({ setSearchedLocation }) => {
   const handleSearchChange = (e) => {
     setCity(e.target.value);
   };
-
+  /*FHandle on click suggestion */
   const handleClick = (clickedItem) => {
     setSearchedLocation(clickedItem);
     setCitySuggestion([]);
@@ -53,6 +54,7 @@ const Header = ({ setSearchedLocation }) => {
     setCitySuggestion([]);
   };
 
+  /*Prevent scroll */
   openSearch ? disableBodyScroll(document) : enableBodyScroll(document);
 
   return (

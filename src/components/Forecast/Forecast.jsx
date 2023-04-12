@@ -23,7 +23,10 @@ const Forecast = ({ weather }) => {
   const getWeekForecast = () => {
     const transformDate = (date) => {
       const splittedDate = date.split("-");
-      const d = new Date(...splittedDate);
+      const newDate = `${splittedDate[0]},${Number(splittedDate[1])},${
+        splittedDate[2]
+      }`;
+      const d = new Date(newDate);
       return d.toString().split(" ")[0];
     };
 
@@ -38,7 +41,7 @@ const Forecast = ({ weather }) => {
 
     setWeekForecast(weekForecast);
   };
-
+  /* Get forecast */
   useEffect(() => {
     if (weather.forecast?.forecastday && selectedButton) {
       getHourlyForecast();

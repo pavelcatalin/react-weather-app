@@ -11,6 +11,7 @@ const FavoriteLocations = ({ weather, geolocation, setSearchedLocation }) => {
   const favorites = useSelector((state) => state.favorites.values);
   const dispatch = useDispatch();
 
+  /* Handle when the user clicks on card  */
   const handleClickFavorite = (city, country) => {
     const locationToString = `${city},${country}`;
     setSearchedLocation(locationToString);

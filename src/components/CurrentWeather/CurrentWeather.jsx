@@ -41,6 +41,7 @@ const CurrentWeather = ({ weather, geolocation }) => {
     }
   }, [weather, geolocation]);
 
+  /* Add to favorites */
   const handleAddToFavorites = () => {
     dispatch(
       addToFavorites({
@@ -52,7 +53,7 @@ const CurrentWeather = ({ weather, geolocation }) => {
     );
     setIsAddedToFavorites(!isAddedToFavorites);
   };
-
+  /* Remove from favorites */
   const handleRemoveFromFavorites = () => {
     dispatch(
       removeFromFavorites({
@@ -62,7 +63,7 @@ const CurrentWeather = ({ weather, geolocation }) => {
     );
     setIsAddedToFavorites(!isAddedToFavorites);
   };
-
+  /* Check if it is the current location */
   useEffect(() => {
     const checkLocationStatus = () => {
       const status = favorites.filter((item) => {

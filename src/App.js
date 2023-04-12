@@ -5,20 +5,23 @@ import Theme from "./components/Theme/Theme";
 import FavoriteLocations from "./components/FavoriteLocations";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { WEATHER_API_KEY } from "./utils/api";
 
 function App() {
-  const isOpen = useSelector((state) => state.favorites.isOpen);
+  const favoritesIsOpen = useSelector((state) => state.favorites.isOpen);
   const [weather, setWeather] = useState([]);
   const [searchedLocation, setSearchedLocation] = useState("");
   const [geolocation, setGeolocation] = useState({});
   const [currentCity, setCurrentCity] = useState("");
 
+  /* Get geolocation */
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setGeolocation(position.coords);
     });
   }, [searchedLocation]);
 
+  /* Get current city */
   useEffect(() => {
     const fetchCurrentCity = async () => {
       const response = await fetch(
@@ -32,10 +35,11 @@ function App() {
     }
   }, [geolocation]);
 
+  /* Fetch weather data */
   useEffect(() => {
     const fetchWeather = async () => {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=c6b8e2514ae044888d4195455230804&q=${
+        `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${
           searchedLocation || currentCity.city
         }&days=7&aqi=yes&alerts=no`
       );
@@ -56,7 +60,7 @@ function App() {
         setSearchedLocation={setSearchedLocation}
         searchedLocation={searchedLocation}
       />
-      {isOpen ? (
+      {favoritesIsOpen ? (
         <Main weather={weather} geolocation={geolocation} />
       ) : (
         <FavoriteLocations
